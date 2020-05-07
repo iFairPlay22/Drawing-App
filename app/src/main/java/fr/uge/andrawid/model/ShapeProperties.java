@@ -4,8 +4,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class ShapeProperties {
+
     private final float originX;
     private final float originY;
+
     private int color = Color.BLACK;
     private float strokeWidth = 10;
     // color
@@ -30,4 +32,5 @@ public class ShapeProperties {
     public float getOriginY() {
         return originY;
     }
+
 }
