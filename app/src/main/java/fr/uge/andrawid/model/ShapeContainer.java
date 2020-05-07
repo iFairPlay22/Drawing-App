@@ -17,32 +17,33 @@ public class ShapeContainer {
 
         Objects.requireNonNull(canvas);
 
-        for (DrawableShape shape : shapeContainer.keySet()) {
-            shape.drawShape(shapeContainer.get(shape), canvas);
+        for (DrawableShape shape : this.shapeContainer.keySet()) {
+            shape.drawShape(this.shapeContainer.get(shape), canvas);
         }
     }
 
     public boolean add(DrawableShape shape, ShapeProperties properties) {
 
-        Objects.requireNonNull(shape);
-        Objects.requireNonNull(properties);
+        final boolean res = !this.shapeContainer.containsKey(shape);
 
-        if (shapeContainer.containsKey(shape)) {
-            shapeContainer.put(shape, properties);
-            fireListeners();
-            return false;
-        }
-        shapeContainer.put(shape, properties);
+        this.shapeContainer.put(Objects.requireNonNull(shape), Objects.requireNonNull(properties));
         fireListeners();
-        return true;
+
+        return res;
     }
 
     public void addChangeListener(ShapeContainerChangeListener listener) {
-        changeListeners.add(listener);
+
+        changeListeners.add(Objects.requireNonNull(listener));
+        fireListeners();
+
     }
 
     public void removeChangeListener(ShapeContainerChangeListener listener) {
-        changeListeners.remove(listener);
+
+        changeListeners.remove(Objects.requireNonNull(listener));
+        fireListeners();
+
     }
 
     public void fireListeners() {

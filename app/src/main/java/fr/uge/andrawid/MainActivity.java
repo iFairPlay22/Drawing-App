@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
             shapeContainer.add(lineShape, new ShapeProperties(20.0f, 40.0f));
         });
 
-
+    /*
         drawingView.setOnTouchListener(
+
                 (v, event) -> {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_HOVER_MOVE:
@@ -45,5 +46,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
         );
+    */
     }
 }

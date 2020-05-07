@@ -14,7 +14,7 @@ import fr.uge.andrawid.model.ShapeContainerChangeListener;
 
 public class DrawingView extends View {
     private ShapeContainer model;
-    private ShapeContainerChangeListener cl = () -> invalidate();
+    private final ShapeContainerChangeListener cl = () -> invalidate();
 
     public DrawingView(Context context) {
         super(context);
@@ -33,16 +33,21 @@ public class DrawingView extends View {
     }
 
     public void setModel(ShapeContainer shapeContainer){
-        if (model != null)
+
+        if (this.model != null)
             shapeContainer.removeChangeListener(cl);
+
         this.model = Objects.requireNonNull(shapeContainer);
-        model.addChangeListener(cl);
+        this.model.addChangeListener(cl);
+
         this.invalidate();
     }
 
     public void onDraw(Canvas canvas){
+
         if(model != null){
             model.draw(canvas);
         }
+
     }
 }
