@@ -16,14 +16,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DrawingView dv = findViewById(R.id.drawingView);
-        final ShapeContainer sc = new ShapeContainer();
-        final LineShape ls = new LineShape(new float[]{0.0f, 0.0f, 50.0f, 15.0f});
-        sc.add(ls, new ShapeProperties(10.0f, 30.0f));
-        dv.setModel(sc);
+        final LineShape lineShape = new LineShape(new float[]{0.0f, 0.0f, 50.0f, 15.0f});
+
+        final ShapeContainer shapeContainer = new ShapeContainer();
+
+        shapeContainer.add(lineShape, new ShapeProperties(10.0f, 30.0f));
+
+
+
+        final DrawingView drawingView = findViewById(R.id.drawingView);
+
+        drawingView.setModel(shapeContainer);
         // listener to move the line
-        dv.setOnClickListener( v -> {
-            sc.add(ls, new ShapeProperties(20.0f, 40.0f));
+        drawingView.setOnClickListener( v -> {
+            shapeContainer.add(lineShape, new ShapeProperties(20.0f, 40.0f));
         });
     }
 }
