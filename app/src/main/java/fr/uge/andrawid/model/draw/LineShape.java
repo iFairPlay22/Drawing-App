@@ -1,6 +1,8 @@
-package fr.uge.andrawid.model;
+package fr.uge.andrawid.model.draw;
 
 import android.graphics.Canvas;
+
+import fr.uge.andrawid.model.ShapeProperties;
 
 public class LineShape implements DrawableShape {
     private final float[] coordinates;

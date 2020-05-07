@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.uge.andrawid.model.draw.DrawableShape;
+
 public class ShapeContainer {
     private final Map<DrawableShape, ShapeProperties> shapeContainer = new HashMap<>();
 

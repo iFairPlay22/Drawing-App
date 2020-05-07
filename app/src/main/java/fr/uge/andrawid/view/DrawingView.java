@@ -2,15 +2,12 @@ package fr.uge.andrawid.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import fr.uge.andrawid.model.LineShape;
 import fr.uge.andrawid.model.ShapeContainer;
-import fr.uge.andrawid.model.ShapeProperties;
 
 public class DrawingView extends View {
     private ShapeContainer model;

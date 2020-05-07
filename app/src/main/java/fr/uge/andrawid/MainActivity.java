@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import fr.uge.andrawid.model.LineShape;
+import fr.uge.andrawid.model.draw.LineShape;
 import fr.uge.andrawid.model.ShapeContainer;
 import fr.uge.andrawid.model.ShapeProperties;
 import fr.uge.andrawid.view.DrawingView;
