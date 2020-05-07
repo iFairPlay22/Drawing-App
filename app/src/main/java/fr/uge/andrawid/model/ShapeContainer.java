@@ -6,12 +6,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import fr.uge.andrawid.model.draw.DrawableShape;
 
 public class ShapeContainer {
     private final Map<DrawableShape, ShapeProperties> shapeContainer = new HashMap<>();
-    private HashSet<ShapeContainerChangeListener> changeListeners = new HashSet<>();
+    private final Set<ShapeContainerChangeListener> changeListeners = new HashSet<>();
 
     public void draw(Canvas canvas) {
 
