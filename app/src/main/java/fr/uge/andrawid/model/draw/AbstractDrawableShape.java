@@ -15,6 +15,7 @@ public class AbstractDrawableShape implements DrawableShape {
         this.coordinates = Objects.requireNonNull(coordinates);
     }
 
+    @Override
     public void drawShape(ShapeProperties properties, Canvas canvas) {}
 
 }
