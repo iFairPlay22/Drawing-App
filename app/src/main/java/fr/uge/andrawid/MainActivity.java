@@ -3,8 +3,10 @@ package fr.uge.andrawid;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
+import fr.uge.andrawid.model.draw.DrawableShape;
 import fr.uge.andrawid.model.draw.LineShape;
 import fr.uge.andrawid.model.ShapeContainer;
 import fr.uge.andrawid.model.ShapeProperties;
@@ -12,38 +14,49 @@ import fr.uge.andrawid.view.DrawingView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawingView drawingView;
+    private ShapeContainer shapeContainer;
+
+    private float initialX;
+    private float initialY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final LineShape lineShape = new LineShape(new float[]{0.0f, 0.0f, 50.0f, 15.0f});
-        final ShapeContainer shapeContainer = new ShapeContainer();
-        shapeContainer.add(lineShape, new ShapeProperties(10.0f, 30.0f));
+        shapeContainer = new ShapeContainer();
 
-
-
-        final DrawingView drawingView = findViewById(R.id.drawingView);
+        drawingView = findViewById(R.id.drawingView);
         drawingView.setModel(shapeContainer);
-
-        drawingView.setOnClickListener( v -> {
-            shapeContainer.add(lineShape, new ShapeProperties(20.0f, 40.0f));
-        });
 
 
         drawingView.setOnTouchListener(
 
                 (v, event) -> {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_HOVER_MOVE:
-                            // process the mouse hover movement...
+                    switch (event.getActionMasked()) {
+
+                        case MotionEvent.ACTION_DOWN:
+
+                            initialX = event.getX();
+                            initialY = event.getY();
+
                             return true;
-                        case MotionEvent.ACTION_SCROLL:
-                            // process the scroll wheel movement...
+
+                        case MotionEvent.ACTION_MOVE:
+
+                            return true;
+
+                        case MotionEvent.ACTION_UP:
+
+                            shapeContainer.add(new LineShape(new float[]{0.0f, 0.0f, event.getX() - initialX, event.getY() - initialY}), new ShapeProperties(initialX, initialY));
+
+                            return true;
+
+                        default:
+
                             return true;
                     }
-
-                    return true;
                 }
         );
 
