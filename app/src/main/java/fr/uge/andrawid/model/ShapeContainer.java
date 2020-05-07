@@ -2,18 +2,16 @@ package fr.uge.andrawid.model;
 
 import android.graphics.Canvas;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import fr.uge.andrawid.model.draw.DrawableShape;
 
 public class ShapeContainer {
     private final Map<DrawableShape, ShapeProperties> shapeContainer = new HashMap<>();
-    private final Set<ShapeContainerChangeListener> changeListeners = new HashSet<>();
+    private HashSet<ShapeContainerChangeListener> changeListeners = new HashSet<>();
 
     public void draw(Canvas canvas) {
 
@@ -31,18 +29,20 @@ public class ShapeContainer {
 
         if (shapeContainer.containsKey(shape)) {
             shapeContainer.put(shape, properties);
+            fireListeners();
             return false;
         }
         shapeContainer.put(shape, properties);
+        fireListeners();
         return true;
     }
 
     public void addChangeListener(ShapeContainerChangeListener listener) {
-
+        changeListeners.add(listener);
     }
 
     public void removeChangeListener(ShapeContainerChangeListener listener) {
-
+        changeListeners.remove(listener);
     }
 
     public void fireListeners() {
