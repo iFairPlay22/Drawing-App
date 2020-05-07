@@ -10,10 +10,11 @@ import fr.uge.andrawid.model.draw.DrawableShape;
 import fr.uge.andrawid.model.draw.LineShape;
 import fr.uge.andrawid.model.ShapeContainer;
 import fr.uge.andrawid.model.ShapeProperties;
+import fr.uge.andrawid.model.draw.ShapeKind;
 import fr.uge.andrawid.view.DrawingView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ShapeKind selectedShapeKind;
     private DrawingView drawingView;
     private ShapeContainer shapeContainer;
 
