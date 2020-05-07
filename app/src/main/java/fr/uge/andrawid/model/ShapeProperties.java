@@ -22,6 +22,7 @@ public class ShapeProperties {
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setStrokeWidth(strokeWidth);
+        paint.setStyle(Paint.Style.STROKE);
         return paint;
     }
 

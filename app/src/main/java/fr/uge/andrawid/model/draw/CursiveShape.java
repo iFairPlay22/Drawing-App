@@ -1,6 +1,7 @@
 package fr.uge.andrawid.model.draw;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 
 import java.util.Objects;
 
@@ -19,19 +20,16 @@ public class CursiveShape extends AbstractDrawableShape {
 
         float[] newCoordinates = new float[coordinates.length];
 
-        for (int i = 0; i < coordinates.length; i++) {
+        Path path = new Path();
 
-            if (i % 2 == 0) {
+        path.moveTo(properties.getOriginX() + newCoordinates[0], properties.getOriginY() + newCoordinates[1]);
 
-                newCoordinates[i] = properties.getOriginX() + coordinates[i];
+        for (int i = 2; i < coordinates.length; i+=2) {
 
-            } else {
-
-                newCoordinates[i] = properties.getOriginY() + coordinates[i];
-            }
+            path.lineTo(properties.getOriginX() + coordinates[i], properties.getOriginY() + coordinates[i + 1]);
 
         }
 
-        canvas.drawLines(newCoordinates, properties.getPaint());
+        canvas.drawPath(path, properties.getPaint());
     }
 }
