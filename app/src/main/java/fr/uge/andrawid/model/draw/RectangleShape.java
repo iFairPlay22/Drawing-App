@@ -1,6 +1,7 @@
 package fr.uge.andrawid.model.draw;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import java.util.Objects;
 
@@ -17,6 +18,7 @@ public class RectangleShape extends AbstractDrawableShape {
         Objects.requireNonNull(properties);
         Objects.requireNonNull(canvas);
 
-
+        canvas.drawRect( properties.getOriginX() + coordinates[0], properties.getOriginY() + coordinates[1],
+                properties.getOriginX() + coordinates[2], properties.getOriginY() + coordinates[3], properties.getPaint());
     }
 }
