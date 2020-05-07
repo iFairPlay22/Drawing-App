@@ -18,7 +18,6 @@ public class LineShape extends AbstractDrawableShape {
         Objects.requireNonNull(properties);
         Objects.requireNonNull(canvas);
 
-        canvas.drawLine(properties.getOriginX() + coordinates[0], properties.getOriginY() + coordinates[1],
-                properties.getOriginX() + coordinates[2], properties.getOriginY() + coordinates[3], properties.getPaint());
+        canvas.drawLine(properties.getOriginX() + coordinates[0], properties.getOriginY() + coordinates[1], properties.getOriginX() + coordinates[2], properties.getOriginY() + coordinates[3], properties.getPaint());
     }
 }

@@ -17,6 +17,21 @@ public class CursiveShape extends AbstractDrawableShape {
         Objects.requireNonNull(properties);
         Objects.requireNonNull(canvas);
 
-        canvas
+        float[] newCoordinates = new float[coordinates.length];
+
+        for (int i = 0; i < coordinates.length; i++) {
+
+            if (i % 2 == 0) {
+
+                newCoordinates[i] = properties.getOriginX() + coordinates[i];
+
+            } else {
+
+                newCoordinates[i] = properties.getOriginY() + coordinates[i];
+            }
+
+        }
+
+        canvas.drawLines(newCoordinates, properties.getPaint());
     }
 }
