@@ -2,8 +2,8 @@ package fr.uge.andrawid.model;
 
 import android.graphics.Canvas;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ import fr.uge.andrawid.model.draw.DrawableShape;
 
 public class ShapeContainer {
     private final Map<DrawableShape, ShapeProperties> shapeContainer = new HashMap<>();
-    private ArrayList<ShapeContainerChangeListener> changeListeners = new ArrayList<>();
+    private HashSet<ShapeContainerChangeListener> changeListeners = new HashSet<>();
 
     public void draw(Canvas canvas) {
 
