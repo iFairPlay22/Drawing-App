@@ -4,11 +4,10 @@ import android.graphics.Canvas;
 
 import fr.uge.andrawid.model.ShapeProperties;
 
-public class LineShape implements DrawableShape {
-    private final float[] coordinates;
+public class LineShape extends AbstractDrawableShape {
 
     public LineShape(float[] coordinates) {
-        this.coordinates = coordinates;
+        super(coordinates);
     }
 
     @Override
