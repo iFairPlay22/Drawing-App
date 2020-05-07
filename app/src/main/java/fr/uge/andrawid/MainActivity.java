@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import fr.uge.andrawid.model.ShapeBuilder;
 import fr.uge.andrawid.model.draw.CursiveShape;
 import fr.uge.andrawid.model.draw.DrawableShape;
 import fr.uge.andrawid.model.draw.LineShape;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ShapeKind selectedShapeKind = ShapeKind.CURSIVE;
     private DrawingView drawingView;
     private ShapeContainer shapeContainer;
+    private ShapeBuilder shapeBuilder;
 
     private float initialX;
     private float initialY;
@@ -46,28 +48,13 @@ public class MainActivity extends AppCompatActivity {
         return coordinates;
     }
 
-    private DrawableShape createForm(float[] coordinates) {
-        switch (selectedShapeKind) {
-            case SEGMENT:
-                return new LineShape(coordinates);
-
-            case RECTANGLE:
-                return new RectangleShape(coordinates);
-
-            case CURSIVE:
-                return new CursiveShape(coordinates);
-
-            default:
-                return null;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         shapeContainer = new ShapeContainer();
+        shapeBuilder = new ShapeBuilder();
 
         drawingView = findViewById(R.id.drawingView);
         drawingView.setModel(shapeContainer);
@@ -98,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                         case MotionEvent.ACTION_UP:
 
-                            shapeContainer.add(createForm(getCoordinates(event.getX(), event.getY())), new ShapeProperties(initialX, initialY));
+                            shapeContainer.add(shapeBuilder.build(getCoordinates(event.getX(), event.getY())), new ShapeProperties(initialX, initialY));
 
                             return true;
 
