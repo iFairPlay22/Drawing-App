@@ -10,9 +10,11 @@ import androidx.annotation.Nullable;
 import java.util.Objects;
 
 import fr.uge.andrawid.model.ShapeContainer;
+import fr.uge.andrawid.model.ShapeContainerChangeListener;
 
 public class DrawingView extends View {
     private ShapeContainer model;
+    private ShapeContainerChangeListener cl = () -> invalidate();
 
     public DrawingView(Context context) {
         super(context);
@@ -31,7 +33,10 @@ public class DrawingView extends View {
     }
 
     public void setModel(ShapeContainer shapeContainer){
+        if (model != null)
+            shapeContainer.removeChangeListener(cl);
         this.model = Objects.requireNonNull(shapeContainer);
+        model.addChangeListener(cl);
         this.invalidate();
     }
 

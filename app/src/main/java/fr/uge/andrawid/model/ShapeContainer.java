@@ -29,18 +29,20 @@ public class ShapeContainer {
 
         if (shapeContainer.containsKey(shape)) {
             shapeContainer.put(shape, properties);
+            fireListeners();
             return false;
         }
         shapeContainer.put(shape, properties);
+        fireListeners();
         return true;
     }
 
     public void addChangeListener(ShapeContainerChangeListener listener) {
-        
+        changeListeners.add(listener);
     }
 
     public void removeChangeListener(ShapeContainerChangeListener listener) {
-
+        changeListeners.remove(listener);
     }
 
     public void fireListeners() {
