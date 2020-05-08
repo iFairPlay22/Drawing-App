@@ -2,40 +2,25 @@ package fr.uge.andrawid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
-
-import fr.uge.andrawid.model.ShapeBuilder;
-import fr.uge.andrawid.model.draw.CursiveShape;
-import fr.uge.andrawid.model.draw.DrawableShape;
-import fr.uge.andrawid.model.draw.LineShape;
-import fr.uge.andrawid.model.ShapeContainer;
-import fr.uge.andrawid.model.ShapeProperties;
-import fr.uge.andrawid.model.draw.RectangleShape;
-import fr.uge.andrawid.model.draw.ShapeKind;
+import fr.uge.andrawid.controller.Controller;
 import fr.uge.andrawid.view.DrawingView;
 
 
 
 public class MainActivity extends AppCompatActivity {
-    private DrawingView drawingView;
-    private ShapeContainer shapeContainer;
-    private ShapeBuilder shapeBuilder;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        shapeContainer = new ShapeContainer();
-        shapeBuilder = new ShapeBuilder();
-
-        drawingView = findViewById(R.id.drawingView);
-        drawingView.setModel(shapeContainer);
-
-        shapeBuilder.setShapeKind(ShapeKind.CURSIVE);
+        DrawingView drawingView = findViewById(R.id.drawingView);
+        Controller controller = new Controller(drawingView);
 
         drawingView.setOnTouchListener(
 
@@ -43,27 +28,22 @@ public class MainActivity extends AppCompatActivity {
                     switch (event.getActionMasked()) {
 
                         case MotionEvent.ACTION_DOWN:
-
-                            shapeBuilder.actionDown(event.getX(), event.getY());
-
-                            return true;
+                            controller.onDown(event.getX(), event.getY());
+                            break;
 
                         case MotionEvent.ACTION_MOVE:
-
-                            shapeBuilder.actionMove(event.getX(), event.getY());
-
-                            return true;
+                            controller.onMove(event.getX(), event.getY());
+                            break;
 
                         case MotionEvent.ACTION_UP:
-
-                            shapeContainer.add(shapeBuilder.actionUp(event.getX(), event.getY()), shapeBuilder.getShapeProperties());
-
-                            return true;
+                            controller.onUp(event.getX(), event.getY());
+                            break;
 
                         default:
-
-                            return true;
+                            break;
                     }
+
+                    return true;
                 }
         );
 
