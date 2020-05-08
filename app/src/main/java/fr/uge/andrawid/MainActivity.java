@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import fr.uge.andrawid.controller.Controller;
+import fr.uge.andrawid.model.draw.ShapeKind;
 import fr.uge.andrawid.view.DrawingView;
 
 
@@ -46,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
         );
+
+        ListView lv = (ListView) findViewById(R.id.listView);
+        lv.setAdapter(new ArrayAdapter<ShapeKind>(this, android.R.layout.simple_list_item_1, ShapeKind.values()));
+
+        lv.setOnItemClickListener( (adapterView, view, i, l) -> {
+            controller.onShapeSelection((ShapeKind) adapterView.getItemAtPosition(i));
+        });
 
     }
 }

@@ -66,4 +66,8 @@ public class Controller {
 
         return coordinates;
     }
+
+    public void onShapeSelection(ShapeKind shapeKind) {
+        this.shapeBuilder.setShapeKind(Objects.requireNonNull(shapeKind));
+    }
 }
