@@ -18,7 +18,7 @@ import java.util.List;
 import fr.uge.andrawid.controller.Controller;
 import fr.uge.andrawid.model.draw.ShapeKind;
 import fr.uge.andrawid.view.DrawingView;
-
+import fr.uge.andrawid.view.ShapeArrayAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         ListView lv = (ListView) findViewById(R.id.listView);
 
-        com.example.tp1.util.ShapeArrayAdapter arrayAdapter = new com.example.tp1.util.ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values());
+        ShapeArrayAdapter arrayAdapter = new ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values());
 
         lv.setAdapter(arrayAdapter);
 

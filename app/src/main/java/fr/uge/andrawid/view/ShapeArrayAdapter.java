@@ -1,16 +1,17 @@
-package com.example.tp1.util;
+package fr.uge.andrawid.view;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Objects;
-
 import fr.uge.andrawid.model.draw.ShapeKind;
 
 public class ShapeArrayAdapter extends ArrayAdapter<ShapeKind> {
@@ -26,10 +27,14 @@ public class ShapeArrayAdapter extends ArrayAdapter<ShapeKind> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ShapeKind shapeKind = getItem(position);
 
         TextView textView = new TextView(context);
-        textView.setText("" + getItem(position));
+        textView.setText("" + shapeKind);
 
-        return textView;
+        ImageView imageView = new ImageView(context);
+        imageView.setImageResource(shapeKind.getPath());
+
+        return imageView;
     }
 }
