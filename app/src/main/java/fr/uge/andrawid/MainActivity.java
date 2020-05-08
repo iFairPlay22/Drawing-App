@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,8 +23,6 @@ import fr.uge.andrawid.view.ShapeArrayAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    // TODO: ** Une palette sur plusieurs colonnes **
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -59,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        ListView lv = (ListView) findViewById(R.id.listView);
+        GridView gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setNumColumns(2);
 
         ShapeArrayAdapter arrayAdapter = new ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values());
 
-        lv.setAdapter(arrayAdapter);
+        gridView.setAdapter(arrayAdapter);
 
-        lv.setOnItemClickListener( (adapterView, view, i, l) -> {
+        gridView.setOnItemClickListener( (adapterView, view, i, l) -> {
             controller.onShapeSelection((ShapeKind) adapterView.getItemAtPosition(i));
         });
 

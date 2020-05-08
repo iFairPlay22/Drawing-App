@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,11 +30,23 @@ public class ShapeArrayAdapter extends ArrayAdapter<ShapeKind> {
         ShapeKind shapeKind = getItem(position);
 
         TextView textView = new TextView(context);
-        textView.setText("" + shapeKind);
+        textView.setText(shapeKind.toString());
+        textView.setTextSize(10);
 
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(shapeKind.getPath());
+        imageView.setPadding(0, 0, 0, 7);
 
-        return imageView;
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, imageView.getId());
+
+
+        RelativeLayout relativeLayout = new RelativeLayout(context);
+        relativeLayout.addView(imageView);
+        relativeLayout.addView(textView, layoutParams);
+
+
+
+        return relativeLayout;
     }
 }
