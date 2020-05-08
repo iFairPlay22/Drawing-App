@@ -1,12 +1,19 @@
 package fr.uge.andrawid;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.List;
 
 import fr.uge.andrawid.controller.Controller;
 import fr.uge.andrawid.model.draw.ShapeKind;
@@ -15,6 +22,8 @@ import fr.uge.andrawid.view.DrawingView;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    // TODO: ** Une palette sur plusieurs colonnes **
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -51,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         );
 
         ListView lv = (ListView) findViewById(R.id.listView);
-        lv.setAdapter(new ArrayAdapter<ShapeKind>(this, android.R.layout.simple_list_item_1, ShapeKind.values()));
+
+        com.example.tp1.util.ShapeArrayAdapter arrayAdapter = new com.example.tp1.util.ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values());
+
+        lv.setAdapter(arrayAdapter);
 
         lv.setOnItemClickListener( (adapterView, view, i, l) -> {
             controller.onShapeSelection((ShapeKind) adapterView.getItemAtPosition(i));
