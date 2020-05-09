@@ -1,8 +1,11 @@
 package fr.uge.andrawid.controller;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
+import fr.uge.andrawid.model.Coordinates;
 import fr.uge.andrawid.model.ShapeBuilder;
 import fr.uge.andrawid.model.ShapeContainer;
 import fr.uge.andrawid.model.ShapeProperties;
@@ -72,6 +75,15 @@ public class Controller {
     }
 
     public void onShapeSelection() {
+        shapeContainer.selectNearestShape(initialX, initialY);
+    }
 
+    public void onShapeMovement(float x, float y) {
+        shapeContainer.moveSelectedShape(x, y);
+    }
+
+    public void onShapeDelete() {
+        shapeContainer.selectNearestShape(initialX, initialY);
+        shapeContainer.deleteSelectedShape();
     }
 }

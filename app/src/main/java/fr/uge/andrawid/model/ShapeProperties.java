@@ -34,4 +34,8 @@ public class ShapeProperties {
         return originY;
     }
 
+    public Coordinates getCoords(Coordinates coordinates) {
+        return new Coordinates(originX, originY).sum(coordinates);
+    }
+
 }

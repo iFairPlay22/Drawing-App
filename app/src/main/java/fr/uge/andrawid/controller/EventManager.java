@@ -1,6 +1,7 @@
 package fr.uge.andrawid.controller;
 
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.Objects;
 
@@ -9,68 +10,82 @@ import fr.uge.andrawid.view.DrawingView;
 
 public class EventManager {
 
-    public static final int SELECTION_TIME = 2000;
+    private static final int TESTING_THIRD_CLICK_TIME = 250;
+    private static final int TESTING_SELECTION_TIME = 2000;
     private static final int SELECTION_MAX_MOVES = 10;
 
-    private int moves;
-    private long time;
+    private boolean isFormSelected = false;
+    private int moves = 0;
+    private int down = 0;
+    private long thirdClickTime = 0;
+    private long selectionTime = 0;
 
     private final Controller controller;
-    private final Handler selectionHandler;
-    private final Runnable onSelection;
-
 
     public EventManager(DrawingView drawingView) {
-
         controller = new Controller(Objects.requireNonNull(drawingView));
-        selectionHandler = new Handler();
-        onSelection = () -> controller.onShapeSelection();
-        moves = 0;
-        time = System.currentTimeMillis();
     }
 
     public void onDown(float x, float y) {
-        moves = 0;
-        time = System.currentTimeMillis();
+
+        if (testingThirdClick()) {
+
+            // On teste le triple clic
+            if (down == 0)
+                thirdClickTime = System.currentTimeMillis();
+
+            down++;
+
+            if (tripleCick()) {
+                controller.onShapeDelete();
+                thirdClickTime = 0;
+                down = 0;
+            }
+        }
+
+        if (testingSelection()) {
+
+            // On teste la selection
+
+            if (moves == 0) {
+                selectionTime = System.currentTimeMillis();
+                isFormSelected = false;
+            }
+        }
 
         controller.onDown(x, y);
-        selectionHandler.postDelayed(onSelection, SELECTION_TIME);
     }
 
     public void onMove(float x, float y) {
+
         if (testingSelection()) {
 
             // On teste la sélection
 
-            controller.onMove(x, y);
             moves++;
-        } else if (!isSelectionTimeOverAndSelected()) {
 
-            // On ne teste plus la sélection
-            // Il n'y a pas de sélection
-
-            selectionHandler.removeCallbacks(onSelection);
-            controller.onMove(x, y);
+        } else if (isSelected()) {
+            if (!isFormSelected) {
+                controller.onShapeSelection();
+                isFormSelected = true;
+            }
+            controller.onShapeMovement(x, y);
         } else {
-
-            // On ne teste plus la sélection
-            // Il a une sélection
-
+            controller.onMove(x, y);
         }
     }
 
     public void onUp(float x, float y) {
 
-        if (testingSelection() || !isSelectionTimeOverAndSelected()) {
-
-            // Il n'a pas de sélection
-
+        if (!isSelected() && !testingThirdClick() && !tripleCick())
             controller.onUp(x, y);
-        } else {
 
-            // Il y a une sélection
+        if (!testingSelection())
+            moves = 0;
 
-        }
+        if (!testingThirdClick())
+            down = 0;
+
     }
 
     public void onShapeItemSelection(ShapeKind shapeKind) {
@@ -78,11 +93,26 @@ public class EventManager {
     }
 
     private boolean testingSelection() {
-        long actualTime = System.currentTimeMillis() - time;
-        return 0 <= actualTime && actualTime < SELECTION_TIME;
+        if (moves == 0)
+                return true;
+
+        long actualTime = System.currentTimeMillis() - selectionTime;
+        return 0 <= actualTime && actualTime < TESTING_SELECTION_TIME;
     }
 
-    private boolean isSelectionTimeOverAndSelected() {
-        return !testingSelection() && moves < SELECTION_MAX_MOVES;
+    private boolean isSelected() {
+        return moves < SELECTION_MAX_MOVES;
+    }
+
+    private boolean testingThirdClick() {
+        if (down == 0)
+            return true;
+
+        long actualTime = System.currentTimeMillis() - thirdClickTime;
+        return 0 <= actualTime && actualTime < TESTING_THIRD_CLICK_TIME;
+    }
+
+    private boolean tripleCick() {
+        return 2 <= down;
     }
 }
