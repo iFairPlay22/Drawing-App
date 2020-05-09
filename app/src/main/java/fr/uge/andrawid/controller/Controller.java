@@ -17,7 +17,7 @@ public class Controller {
 
     public Controller(DrawingView drawingView) {
 
-        this. shapeContainer = new ShapeContainer();
+        this.shapeContainer = new ShapeContainer();
         Objects.requireNonNull(drawingView).setModel(shapeContainer);
 
         this.shapeBuilder = new ShapeBuilder();
@@ -67,7 +67,11 @@ public class Controller {
         return coordinates;
     }
 
-    public void onShapeSelection(ShapeKind shapeKind) {
+    public void onShapeItemSelection(ShapeKind shapeKind) {
         this.shapeBuilder.setShapeKind(Objects.requireNonNull(shapeKind));
+    }
+
+    public void onShapeSelection() {
+
     }
 }

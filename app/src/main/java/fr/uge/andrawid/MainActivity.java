@@ -1,22 +1,13 @@
 package fr.uge.andrawid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.List;
-
-import fr.uge.andrawid.controller.Controller;
+import fr.uge.andrawid.controller.EventManager;
 import fr.uge.andrawid.model.draw.ShapeKind;
 import fr.uge.andrawid.view.DrawingView;
 import fr.uge.andrawid.view.ShapeArrayAdapter;
@@ -31,23 +22,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DrawingView drawingView = findViewById(R.id.drawingView);
-        Controller controller = new Controller(drawingView);
+        EventManager eventManager = new EventManager(drawingView);
 
         drawingView.setOnTouchListener(
-
                 (v, event) -> {
                     switch (event.getActionMasked()) {
 
                         case MotionEvent.ACTION_DOWN:
-                            controller.onDown(event.getX(), event.getY());
+                            eventManager.onDown(event.getX(), event.getY());
                             break;
 
                         case MotionEvent.ACTION_MOVE:
-                            controller.onMove(event.getX(), event.getY());
+                            eventManager.onMove(event.getX(), event.getY());
                             break;
 
                         case MotionEvent.ACTION_UP:
-                            controller.onUp(event.getX(), event.getY());
+                            eventManager.onUp(event.getX(), event.getY());
                             break;
 
                         default:
@@ -60,13 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
         GridView gridView = (GridView) findViewById(R.id.gridView);
         gridView.setNumColumns(2);
-
-        ShapeArrayAdapter arrayAdapter = new ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values());
-
-        gridView.setAdapter(arrayAdapter);
+        gridView.setAdapter(new ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values()));
 
         gridView.setOnItemClickListener( (adapterView, view, i, l) -> {
-            controller.onShapeSelection((ShapeKind) adapterView.getItemAtPosition(i));
+            eventManager.onShapeItemSelection((ShapeKind) adapterView.getItemAtPosition(i));
         });
 
     }
