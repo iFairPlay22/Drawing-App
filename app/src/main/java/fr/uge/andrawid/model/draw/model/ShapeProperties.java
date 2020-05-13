@@ -1,7 +1,12 @@
-package fr.uge.andrawid.model;
+package fr.uge.andrawid.model.draw.model;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import fr.uge.andrawid.model.Coordinates;
 
 public class ShapeProperties {
 
@@ -34,4 +39,19 @@ public class ShapeProperties {
         return originY;
     }
 
+    public Coordinates getCoords(Coordinates coordinates) {
+        return new Coordinates(originX, originY).sum(coordinates);
+    }
+
+    public JSONObject toJSON() {
+        return new JSONObject() {{
+            try {
+                put("originX", originX);
+                put("originY", originY);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }};
+    }
 }
+

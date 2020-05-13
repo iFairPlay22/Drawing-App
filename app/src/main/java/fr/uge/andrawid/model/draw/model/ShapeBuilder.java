@@ -1,17 +1,22 @@
-package fr.uge.andrawid.model;
+package fr.uge.andrawid.model.draw.model;
 
-import fr.uge.andrawid.model.draw.CursiveShape;
-import fr.uge.andrawid.model.draw.DrawableShape;
-import fr.uge.andrawid.model.draw.LineShape;
-import fr.uge.andrawid.model.draw.RectangleShape;
-import fr.uge.andrawid.model.draw.ShapeKind;
+import java.util.Objects;
+
+import fr.uge.andrawid.model.draw.shapes.CursiveShape;
+import fr.uge.andrawid.model.draw.shapes.LineShape;
+import fr.uge.andrawid.model.draw.shapes.RectangleShape;
 
 public class ShapeBuilder {
     private ShapeKind selectedShapeKind;
 
+
     /** to set the current kind of shape to create */
     public void setShapeKind(ShapeKind shapeKind) {
-        selectedShapeKind = shapeKind;
+        this.selectedShapeKind = Objects.requireNonNull(shapeKind);
+    }
+
+    public boolean requireMoveAction() {
+        return this.selectedShapeKind == ShapeKind.CURSIVE;
     }
 
     /** to build a shape
