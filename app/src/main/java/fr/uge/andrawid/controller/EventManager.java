@@ -1,11 +1,8 @@
 package fr.uge.andrawid.controller;
 
-import android.os.Handler;
-import android.util.Log;
-
 import java.util.Objects;
 
-import fr.uge.andrawid.model.draw.ShapeKind;
+import fr.uge.andrawid.model.draw.model.ShapeKind;
 import fr.uge.andrawid.view.DrawingView;
 
 public class EventManager {
@@ -63,6 +60,7 @@ public class EventManager {
             // On teste la sélection
 
             moves++;
+            controller.onMove(x, y);
 
         } else if (isSelected()) {
             if (!isFormSelected) {

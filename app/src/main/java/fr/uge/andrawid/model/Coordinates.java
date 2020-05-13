@@ -3,6 +3,9 @@ package fr.uge.andrawid.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 public class Coordinates {
@@ -51,5 +54,16 @@ public class Coordinates {
 
     public Coordinates sum(Coordinates coordinates) {
         return new Coordinates(x + coordinates.x, y + coordinates.y);
+    }
+
+    public JSONObject toJSON() {
+        return new JSONObject() {{
+            try {
+                put("x", x);
+                put("y", y);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }};
     }
 }

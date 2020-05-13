@@ -1,14 +1,13 @@
-package fr.uge.andrawid.model.draw;
+package fr.uge.andrawid.model.draw.model;
 
 import android.graphics.Canvas;
 
-import androidx.annotation.NonNull;
-
-import java.util.Arrays;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.Objects;
 
 import fr.uge.andrawid.model.Coordinates;
-import fr.uge.andrawid.model.ShapeProperties;
 
 public class AbstractDrawableShape implements DrawableShape {
 
@@ -42,9 +41,20 @@ public class AbstractDrawableShape implements DrawableShape {
         return topLeftCoords;
     }
 
-    @NonNull
     @Override
-    public String toString() {
-        return "DrawableShape : " + Arrays.toString(coordinates);
+    public JSONObject toJSON() {
+        return new JSONObject() {{
+            try {
+                put("coordinates", new JSONArray(coordinates));
+                put("topLeftCoords", topLeftCoords.toJSON());
+                put("shapekind", getShapeKind());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }};
+    }
+
+    protected ShapeKind getShapeKind() {
+        return null;
     }
 }

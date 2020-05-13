@@ -1,15 +1,18 @@
 package fr.uge.andrawid.controller;
 
-import android.util.Log;
+import android.os.Environment;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import fr.uge.andrawid.model.Coordinates;
-import fr.uge.andrawid.model.ShapeBuilder;
-import fr.uge.andrawid.model.ShapeContainer;
-import fr.uge.andrawid.model.ShapeProperties;
-import fr.uge.andrawid.model.draw.ShapeKind;
+import fr.uge.andrawid.R;
+import fr.uge.andrawid.model.draw.model.ShapeBuilder;
+import fr.uge.andrawid.model.draw.container.ShapeContainer;
+import fr.uge.andrawid.model.draw.model.ShapeProperties;
+import fr.uge.andrawid.model.draw.model.ShapeKind;
+import fr.uge.andrawid.model.save.JsonManager;
 import fr.uge.andrawid.view.DrawingView;
 
 public class Controller {
@@ -25,6 +28,11 @@ public class Controller {
 
         this.shapeBuilder = new ShapeBuilder();
         this.shapeBuilder.setShapeKind(ShapeKind.CURSIVE);
+
+
+        File docPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File appPath = new File(docPath, "andrawid");
+        appPath.mkdir();
     }
 
     private float initialX;
@@ -76,6 +84,7 @@ public class Controller {
 
     public void onShapeSelection() {
         shapeContainer.selectNearestShape(initialX, initialY);
+        shapeContainer.moveSelectedShape(initialX, initialY);
     }
 
     public void onShapeMovement(float x, float y) {

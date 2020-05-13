@@ -1,4 +1,4 @@
-package fr.uge.andrawid.model.draw;
+package fr.uge.andrawid.model.draw.model;
 
 import java.util.Objects;
 

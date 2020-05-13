@@ -1,11 +1,13 @@
-package fr.uge.andrawid.model.draw;
+package fr.uge.andrawid.model.draw.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Path;
 
 import java.util.Objects;
 
-import fr.uge.andrawid.model.ShapeProperties;
+import fr.uge.andrawid.model.draw.model.AbstractDrawableShape;
+import fr.uge.andrawid.model.draw.model.ShapeKind;
+import fr.uge.andrawid.model.draw.model.ShapeProperties;
 
 public class CursiveShape extends AbstractDrawableShape {
 
@@ -31,5 +33,10 @@ public class CursiveShape extends AbstractDrawableShape {
         }
 
         canvas.drawPath(path, properties.getPaint());
+    }
+
+    @Override
+    protected ShapeKind getShapeKind() {
+        return ShapeKind.CURSIVE;
     }
 }

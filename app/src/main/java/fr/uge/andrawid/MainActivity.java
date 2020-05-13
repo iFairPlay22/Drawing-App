@@ -8,7 +8,8 @@ import android.view.MotionEvent;
 import android.widget.GridView;
 
 import fr.uge.andrawid.controller.EventManager;
-import fr.uge.andrawid.model.draw.ShapeKind;
+import fr.uge.andrawid.model.draw.model.ShapeKind;
+import fr.uge.andrawid.model.save.JsonManager;
 import fr.uge.andrawid.view.DrawingView;
 import fr.uge.andrawid.view.ShapeArrayAdapter;
 

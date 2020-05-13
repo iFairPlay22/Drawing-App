@@ -1,7 +1,10 @@
-package fr.uge.andrawid.model;
+package fr.uge.andrawid.model.draw.container;
 
 import android.graphics.Canvas;
-import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +12,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import fr.uge.andrawid.model.draw.DrawableShape;
+import fr.uge.andrawid.model.Coordinates;
+import fr.uge.andrawid.model.draw.model.ShapeProperties;
+import fr.uge.andrawid.model.draw.model.DrawableShape;
 
 public class ShapeContainer {
 
@@ -55,36 +60,61 @@ public class ShapeContainer {
         }
 
         this.selectedShape = nearestShape;
-        moveSelectedShape(x, y);
     }
 
     public void moveSelectedShape(float x, float y) {
-        // ShapeProperties shapeProperties = shapeContainer.get(selectedShape);
 
-        shapeContainer.put(Objects.requireNonNull(selectedShape), new ShapeProperties(x, y));
+        if (selectedShape == null)
+            return ;
+
+        shapeContainer.put(selectedShape, new ShapeProperties(x, y));
+        fireListeners();
+    }
+
+    public void deleteSelectedShape() {
+
+        if (selectedShape == null)
+            return ;
+
+        shapeContainer.remove(selectedShape);
         fireListeners();
     }
 
     public void addChangeListener(ShapeContainerChangeListener listener) {
-
         changeListeners.add(Objects.requireNonNull(listener));
         fireListeners();
-
     }
 
     public void removeChangeListener(ShapeContainerChangeListener listener) {
-
         changeListeners.remove(Objects.requireNonNull(listener));
         fireListeners();
-
     }
 
-    public void fireListeners() {
+    private void fireListeners() {
         for (ShapeContainerChangeListener listener: changeListeners)
             listener.onShapeContainerChange();
     }
 
-    public void deleteSelectedShape() {
-        shapeContainer.remove(selectedShape);
+    public JSONObject toJSON() {
+        return new JSONObject() {{
+            try {
+                put("type", "drawing");
+                put("modificationDate", System.currentTimeMillis());
+                put("content", new JSONArray() {{
+                    shapeContainer.forEach(((drawableShape, shapeProperties) -> {
+                        put(new JSONObject() {{
+                            try {
+                                put("drawableShape", drawableShape.toJSON());
+                                put("shapeProperties", shapeProperties.toJSON());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }});
+                    }));
+                }});
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }};
     }
 }

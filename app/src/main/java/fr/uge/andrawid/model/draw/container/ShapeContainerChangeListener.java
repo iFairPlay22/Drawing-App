@@ -1,4 +1,4 @@
-package fr.uge.andrawid.model;
+package fr.uge.andrawid.model.draw.container;
 
 public interface ShapeContainerChangeListener { // interface fonctionnelle
 

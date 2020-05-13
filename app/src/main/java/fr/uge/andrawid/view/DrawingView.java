@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-import fr.uge.andrawid.model.ShapeContainer;
-import fr.uge.andrawid.model.ShapeContainerChangeListener;
+import fr.uge.andrawid.model.draw.container.ShapeContainer;
+import fr.uge.andrawid.model.draw.container.ShapeContainerChangeListener;
 
 public class DrawingView extends View {
     private ShapeContainer model;

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Objects;
-import fr.uge.andrawid.model.draw.ShapeKind;
+import fr.uge.andrawid.model.draw.model.ShapeKind;
 
 public class ShapeArrayAdapter extends ArrayAdapter<ShapeKind> {
 

@@ -1,13 +1,10 @@
-package fr.uge.andrawid.model;
+package fr.uge.andrawid.model.draw.model;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-import fr.uge.andrawid.model.draw.CursiveShape;
-import fr.uge.andrawid.model.draw.DrawableShape;
-import fr.uge.andrawid.model.draw.LineShape;
-import fr.uge.andrawid.model.draw.RectangleShape;
-import fr.uge.andrawid.model.draw.ShapeKind;
+import fr.uge.andrawid.model.draw.shapes.CursiveShape;
+import fr.uge.andrawid.model.draw.shapes.LineShape;
+import fr.uge.andrawid.model.draw.shapes.RectangleShape;
 
 public class ShapeBuilder {
     private ShapeKind selectedShapeKind;
