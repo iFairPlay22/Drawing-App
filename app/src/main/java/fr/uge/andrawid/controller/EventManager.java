@@ -1,5 +1,7 @@
 package fr.uge.andrawid.controller;
 
+import android.os.Handler;
+
 import java.util.Objects;
 
 import fr.uge.andrawid.model.draw.model.ShapeKind;
@@ -7,6 +9,7 @@ import fr.uge.andrawid.view.DrawingView;
 
 public class EventManager {
 
+    private static final int SAVE_TIME = 300000;
     private static final int TESTING_THIRD_CLICK_TIME = 250;
     private static final int TESTING_SELECTION_TIME = 2000;
     private static final int SELECTION_MAX_MOVES = 10;
@@ -21,9 +24,14 @@ public class EventManager {
 
     public EventManager(DrawingView drawingView) {
         controller = new Controller(Objects.requireNonNull(drawingView));
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            onSave();
+        }, SAVE_TIME);
     }
 
-    public void onDown(float x, float y) {
+    public void onDown(float x, float y) {onSave();
 
         if (testingThirdClick()) {
 
@@ -112,5 +120,13 @@ public class EventManager {
 
     private boolean tripleCick() {
         return 2 <= down;
+    }
+
+    public void onRefresh(String drawingName) {
+        controller.onRefresh(Objects.requireNonNull(drawingName));
+    }
+
+    public void onSave() {
+        controller.onSave();
     }
 }

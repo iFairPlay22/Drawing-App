@@ -1,5 +1,7 @@
 package fr.uge.andrawid.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -16,6 +18,21 @@ public class Coordinates {
     public Coordinates(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Coordinates(JSONObject jsonObject) throws JSONException {
+        this((float) Objects.requireNonNull(jsonObject).get("x"), (float) jsonObject.get("y"));
+    }
+
+    public JSONObject toJSON() {
+        return new JSONObject() {{
+            try {
+                put("x", x);
+                put("y", y);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }};
     }
 
     private float getDistanceX(float x) {
@@ -54,16 +71,5 @@ public class Coordinates {
 
     public Coordinates sum(Coordinates coordinates) {
         return new Coordinates(x + coordinates.x, y + coordinates.y);
-    }
-
-    public JSONObject toJSON() {
-        return new JSONObject() {{
-            try {
-                put("x", x);
-                put("y", y);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }};
     }
 }

@@ -1,6 +1,7 @@
 package fr.uge.andrawid.model.draw.model;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,18 @@ public class AbstractDrawableShape implements DrawableShape {
     }
 
     @Override
+    public JSONObject toJSON() {
+        return new JSONObject() {{
+            try {
+                put("coordinates", new JSONArray(coordinates));
+                put("shapekind", getShapeKind());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }};
+    }
+
+    @Override
     public void drawShape(ShapeProperties properties, Canvas canvas) {}
 
     @Override
@@ -41,18 +54,6 @@ public class AbstractDrawableShape implements DrawableShape {
         return topLeftCoords;
     }
 
-    @Override
-    public JSONObject toJSON() {
-        return new JSONObject() {{
-            try {
-                put("coordinates", new JSONArray(coordinates));
-                put("topLeftCoords", topLeftCoords.toJSON());
-                put("shapekind", getShapeKind());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }};
-    }
 
     protected ShapeKind getShapeKind() {
         return null;

@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import fr.uge.andrawid.model.Coordinates;
 
 public class ShapeProperties {
@@ -21,6 +23,23 @@ public class ShapeProperties {
     public ShapeProperties(float originX, float originY) {
         this.originX = originX;
         this.originY = originY;
+    }
+
+    public ShapeProperties(JSONObject jsonShapeProperties) throws JSONException {
+        this((float) Objects.requireNonNull(jsonShapeProperties).get("originX"), (float) jsonShapeProperties.get("originY"));
+    }
+
+    public JSONObject toJSON() {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("originX", originX);
+            jsonObject.put("originY", originY);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
     public Paint getPaint() {
@@ -41,17 +60,6 @@ public class ShapeProperties {
 
     public Coordinates getCoords(Coordinates coordinates) {
         return new Coordinates(originX, originY).sum(coordinates);
-    }
-
-    public JSONObject toJSON() {
-        return new JSONObject() {{
-            try {
-                put("originX", originX);
-                put("originY", originY);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }};
     }
 }
 
