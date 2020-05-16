@@ -32,7 +32,7 @@ public class SelectionActivity extends AppCompatActivity {
         ListView drawingNameListView = (ListView) findViewById(R.id.drawingNameListView);
         drawingNameListView.setAdapter(new FileArrayAdapter(this, android.R.layout.simple_list_item_1, FileManager.getInstance().listFiles()));
         drawingNameListView.setOnItemClickListener( (adapterView, view, i, l) -> {
-            changeActivity((String) adapterView.getItemAtPosition(i));
+            changeActivity(((File) adapterView.getItemAtPosition(i)).getName());
         });
 
     }

@@ -1,13 +1,8 @@
 package fr.uge.andrawid.controller;
 
-import android.os.Environment;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import fr.uge.andrawid.R;
 import fr.uge.andrawid.model.draw.model.ShapeBuilder;
 import fr.uge.andrawid.model.draw.container.ShapeContainer;
 import fr.uge.andrawid.model.draw.model.ShapeProperties;

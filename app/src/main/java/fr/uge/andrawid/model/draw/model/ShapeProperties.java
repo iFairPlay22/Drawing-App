@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 import fr.uge.andrawid.model.Coordinates;
+import fr.uge.andrawid.model.Util;
 
 public class ShapeProperties {
 
@@ -26,7 +27,7 @@ public class ShapeProperties {
     }
 
     public ShapeProperties(JSONObject jsonShapeProperties) throws JSONException {
-        this((float) Objects.requireNonNull(jsonShapeProperties).get("originX"), (float) jsonShapeProperties.get("originY"));
+        this(Util.doublesToFloat((double) Objects.requireNonNull(jsonShapeProperties).get("originX")), Util.doublesToFloat((double) jsonShapeProperties.get("originY")));
     }
 
     public JSONObject toJSON() {
