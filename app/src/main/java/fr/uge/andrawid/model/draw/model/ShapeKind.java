@@ -1,7 +1,5 @@
 package fr.uge.andrawid.model.draw.model;
 
-import java.util.Objects;
-
 import fr.uge.andrawid.R;
 
 public enum ShapeKind {

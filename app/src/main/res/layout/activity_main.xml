@@ -20,6 +20,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
     <fr.uge.andrawid.view.DrawingView
         android:id="@+id/drawingView"
         android:layout_width="0dp"
@@ -31,13 +38,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
-        android:id="@+id/gridView"
+        android:id="@+id/shapeGridView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal"></GridView>
+
+    <GridView
+        android:id="@+id/colorGridView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_horizontal"></GridView>
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal2"></GridView>
 
     <Button
         android:id="@+id/changeActivityButton"

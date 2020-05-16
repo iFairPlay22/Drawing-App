@@ -7,11 +7,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
 import fr.uge.andrawid.controller.EventManager;
+import fr.uge.andrawid.model.draw.model.ColorKind;
 import fr.uge.andrawid.model.draw.model.ShapeKind;
+import fr.uge.andrawid.view.ColorArrayAdapter;
 import fr.uge.andrawid.view.DrawingView;
 import fr.uge.andrawid.view.ShapeArrayAdapter;
 
@@ -54,13 +57,23 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        GridView gridView = (GridView) findViewById(R.id.gridView);
+        GridView gridView = (GridView) findViewById(R.id.shapeGridView);
         gridView.setNumColumns(2);
         gridView.setAdapter(new ShapeArrayAdapter(this, android.R.layout.simple_list_item_1, ShapeKind.values()));
 
         gridView.setOnItemClickListener( (adapterView, view, i, l) -> {
             eventManager.onShapeItemSelection((ShapeKind) adapterView.getItemAtPosition(i));
         });
+
+
+        GridView colorGridView = (GridView) findViewById(R.id.colorGridView);
+        colorGridView.setNumColumns(2);
+        colorGridView.setAdapter(new ColorArrayAdapter(this, android.R.layout.simple_list_item_1, ColorKind.values()));
+
+        colorGridView.setOnItemClickListener( (adapterView, view, i, l) -> {
+            eventManager.onColorItemSelection((ColorKind) adapterView.getItemAtPosition(i));
+        });
+
 
         Button changeActivityButton = (Button) findViewById(R.id.changeActivityButton);
         changeActivityButton.setOnClickListener((e) -> {

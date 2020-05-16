@@ -30,6 +30,12 @@ public class ShapeProperties {
         this(Util.doublesToFloat((double) Objects.requireNonNull(jsonShapeProperties).get("originX")), Util.doublesToFloat((double) jsonShapeProperties.get("originY")));
     }
 
+    public ShapeProperties(float initialX, float initialY, ColorKind colorKind) {
+        this(initialX, initialY);
+        if (colorKind != null)
+            this.color = colorKind.getColor();
+    }
+
     public JSONObject toJSON() {
 
         JSONObject jsonObject = new JSONObject();

@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import java.util.Objects;
 
+import fr.uge.andrawid.model.draw.model.ColorKind;
 import fr.uge.andrawid.model.draw.model.ShapeKind;
 import fr.uge.andrawid.view.DrawingView;
 
@@ -96,6 +97,10 @@ public class EventManager {
 
     public void onShapeItemSelection(ShapeKind shapeKind) {
         controller.onShapeItemSelection(shapeKind);
+    }
+
+    public void onColorItemSelection(ColorKind colorKind) {
+        controller.onColorItemSelection(colorKind);
     }
 
     private boolean testingSelection() {

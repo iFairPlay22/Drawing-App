@@ -3,6 +3,7 @@ package fr.uge.andrawid.controller;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import fr.uge.andrawid.model.draw.model.ColorKind;
 import fr.uge.andrawid.model.draw.model.ShapeBuilder;
 import fr.uge.andrawid.model.draw.container.ShapeContainer;
 import fr.uge.andrawid.model.draw.model.ShapeProperties;
@@ -16,6 +17,7 @@ public class Controller {
     private ShapeBuilder shapeBuilder;
     private DrawingView drawingView;
     private String drawingName;
+    private ColorKind colorKind;
 
     public Controller(DrawingView drawingView) {
 
@@ -58,7 +60,7 @@ public class Controller {
     }
 
     public void onUp(float x, float y) {
-        shapeContainer.add(shapeBuilder.build(mergeCoords(x, y)), new ShapeProperties(initialX, initialY));
+        shapeContainer.add(shapeBuilder.build(mergeCoords(x, y)), new ShapeProperties(initialX, initialY, colorKind));
     }
 
     private float[] mergeCoords(float x, float y) {
@@ -82,6 +84,10 @@ public class Controller {
 
     public void onShapeItemSelection(ShapeKind shapeKind) {
         this.shapeBuilder.setShapeKind(Objects.requireNonNull(shapeKind));
+    }
+
+    public void onColorItemSelection(ColorKind colorKind) {
+        this.colorKind = colorKind;
     }
 
     public void onShapeSelection() {
