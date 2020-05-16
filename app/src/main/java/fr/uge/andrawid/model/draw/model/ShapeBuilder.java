@@ -2,6 +2,7 @@ package fr.uge.andrawid.model.draw.model;
 
 import java.util.Objects;
 
+import fr.uge.andrawid.model.draw.shapes.CircleShape;
 import fr.uge.andrawid.model.draw.shapes.CursiveShape;
 import fr.uge.andrawid.model.draw.shapes.LineShape;
 import fr.uge.andrawid.model.draw.shapes.RectangleShape;
@@ -35,6 +36,9 @@ public class ShapeBuilder {
 
             case CURSIVE:
                 return new CursiveShape(coords);
+
+            case CIRCLE:
+                return new CircleShape(coords);
 
             default:
                 return null;

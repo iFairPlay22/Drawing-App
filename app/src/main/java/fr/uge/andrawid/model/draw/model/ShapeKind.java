@@ -7,7 +7,8 @@ import fr.uge.andrawid.R;
 public enum ShapeKind {
     SEGMENT(R.drawable.line),
     RECTANGLE(R.drawable.square),
-    CURSIVE(R.drawable.cursive);
+    CURSIVE(R.drawable.cursive),
+    CIRCLE(R.drawable.circle);
 
     private final int path;
 

@@ -8,24 +8,25 @@ import fr.uge.andrawid.model.draw.model.AbstractDrawableShape;
 import fr.uge.andrawid.model.draw.model.ShapeKind;
 import fr.uge.andrawid.model.draw.model.ShapeProperties;
 
-public class RectangleShape extends AbstractDrawableShape {
+public class CircleShape extends AbstractDrawableShape {
 
-    public RectangleShape(float[] coordinates) {
+    public CircleShape(float[] coordinates) {
         super(coordinates);
         if (Objects.requireNonNull(coordinates).length != 4)
-            throw new IllegalArgumentException("Coordinates length of a square must be 4!");
+            throw new IllegalArgumentException("Coordinates length of a circle must be 4!");
     }
 
     @Override
     public void drawShape(ShapeProperties properties, Canvas canvas) {
+
         Objects.requireNonNull(properties);
         Objects.requireNonNull(canvas);
 
-        canvas.drawRect( properties.getOriginX() + coordinates[0], properties.getOriginY() + coordinates[1],properties.getOriginX() + coordinates[2], properties.getOriginY() + coordinates[3], properties.getPaint());
+        canvas.drawCircle(properties.getOriginX() + coordinates[0], properties.getOriginY() + coordinates[1], Math.abs(coordinates[2] - coordinates[0]), properties.getPaint());
     }
 
     @Override
     protected ShapeKind getShapeKind() {
-        return ShapeKind.RECTANGLE;
+        return ShapeKind.CIRCLE;
     }
 }
