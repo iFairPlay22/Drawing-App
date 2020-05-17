@@ -1,5 +1,7 @@
 package fr.uge.andrawid.controller;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 
 import java.util.Objects;
@@ -23,8 +25,8 @@ public class EventManager {
 
     private final Controller controller;
 
-    public EventManager(DrawingView drawingView) {
-        controller = new Controller(Objects.requireNonNull(drawingView));
+    public EventManager(Context context, DrawingView drawingView) {
+        controller = new Controller(Objects.requireNonNull(context), Objects.requireNonNull(drawingView));
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -133,5 +135,9 @@ public class EventManager {
 
     public void onSave() {
         controller.onSave();
+    }
+
+    public Uri onShareDrawing() {
+        return controller.onShareDrawing();
     }
 }

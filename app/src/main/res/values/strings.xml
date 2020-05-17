@@ -3,4 +3,6 @@
     <string name="drawingNameButton">Create</string>
     <string name="drawingNameEditText">Drawing name</string>
     <string name="changeActivityButton">Change</string>
+    <string name="shareMenuButton">Share</string>
+    <string name="validationButtonText">Share</string>
 </resources>

@@ -1,5 +1,8 @@
 package fr.uge.andrawid.model.save;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -9,13 +12,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Objects;
 
+import fr.uge.andrawid.MainActivity;
 import fr.uge.andrawid.model.draw.container.ShapeContainer;
+
+import static androidx.core.content.FileProvider.getUriForFile;
 
 public class FileManager {
 
     private static final FileManager fileManager = new FileManager();
 
     private File appPath;
+    private File temporaryImages;
+    private Context context;
+
     private JsonManager jsonManager;
 
     private FileManager() {}
@@ -24,14 +33,24 @@ public class FileManager {
         return fileManager;
     }
 
-    public void init() {
+    public void init(Context context) {
+
+        this.context = Objects.requireNonNull(context);
         this.jsonManager = new JsonManager();
 
         appPath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "andrawid");
 
         if (!appPath.exists()){
             if (!appPath.mkdirs()){
-                Log.e("azerty", "failed to create directory");
+                Log.e("azerty", "failed to create appPath directory");
+            }
+        }
+
+        temporaryImages = new File(context.getCacheDir(), "temporaryImages");
+
+        if (!temporaryImages.exists()){
+            if (!temporaryImages.mkdirs()){
+                Log.e("azerty", "failed to create temporaryImages directory");
             }
         }
     }
@@ -78,5 +97,22 @@ public class FileManager {
         }
 
         return shapeContainer;
+    }
+
+    public Uri createTemporaryImage(String drawingName, ShapeContainer shapeContainer) {
+
+
+        File filepath = new File(temporaryImages, Objects.requireNonNull(drawingName) + ".jpg");
+        DrawingIO exporter = new DrawingBitmapExporter(Bitmap.CompressFormat.JPEG);
+
+        try {
+
+            exporter.save(Objects.requireNonNull(shapeContainer), new FileOutputStream(filepath));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return getUriForFile(context, "fr.upem.andrawid.tempProvider", filepath);
     }
 }

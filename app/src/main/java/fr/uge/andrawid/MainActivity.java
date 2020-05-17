@@ -1,15 +1,20 @@
 package fr.uge.andrawid;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ShareActionProvider;
 
 import fr.uge.andrawid.controller.EventManager;
 import fr.uge.andrawid.model.draw.model.ColorKind;
@@ -23,6 +28,32 @@ public class MainActivity extends AppCompatActivity {
 
     private EventManager eventManager;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.action_bar, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shareMenuMutton:
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("image/jpeg");
+                shareIntent.putExtra(Intent.EXTRA_STREAM, eventManager.onShareDrawing());
+                new ShareActionProvider(this).setShareIntent(shareIntent);
+                startActivity(shareIntent);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         DrawingView drawingView = findViewById(R.id.drawingView);
-        this.eventManager = new EventManager(drawingView);
+        this.eventManager = new EventManager(this, drawingView);
 
         drawingView.setOnTouchListener(
                 (v, event) -> {

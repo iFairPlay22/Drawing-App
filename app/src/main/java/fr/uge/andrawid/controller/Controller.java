@@ -1,5 +1,8 @@
 package fr.uge.andrawid.controller;
 
+import android.content.Context;
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -19,7 +22,7 @@ public class Controller {
     private String drawingName;
     private ColorKind colorKind;
 
-    public Controller(DrawingView drawingView) {
+    public Controller(Context context, DrawingView drawingView) {
 
         // TODO ?
         this.drawingView = drawingView;
@@ -29,7 +32,7 @@ public class Controller {
 
         this.shapeBuilder = new ShapeBuilder();
         this.shapeBuilder.setShapeKind(ShapeKind.CURSIVE);
-        FileManager.getInstance().init();
+        FileManager.getInstance().init(context);
     }
 
     private float initialX;
@@ -109,5 +112,9 @@ public class Controller {
             return ;
 
         FileManager.getInstance().save(shapeContainer, drawingName);
+    }
+
+    public Uri onShareDrawing() {
+        return FileManager.getInstance().createTemporaryImage(drawingName, shapeContainer);
     }
 }

@@ -61,11 +61,7 @@ public class ShapeContainer {
                 try {
                     jsonObject.put("drawableShape", drawableShape.toJSON());
 
-                    Log.i("azerty", "drawableShape : " + drawableShape.toString());
-
                     jsonObject.put("shapeProperties", shapeProperties.toJSON());
-
-                    Log.i("azerty", "shapeProperties : " + shapeProperties.toString());
 
 
                 } catch (JSONException e) {
@@ -79,8 +75,6 @@ public class ShapeContainer {
             json.put("content", jsonContent);
             json.put("type", "drawing");
             json.put("modificationDate", System.currentTimeMillis());
-
-            Log.i("azerty", "ShapeContainer : " + json.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -110,6 +104,8 @@ public class ShapeContainer {
     public void draw(Canvas canvas) {
 
         Objects.requireNonNull(canvas);
+
+        Log.i("azerty", this.shapeContainer.keySet().toString());
 
         for (DrawableShape shape : this.shapeContainer.keySet()) {
             shape.drawShape(this.shapeContainer.get(shape), canvas);

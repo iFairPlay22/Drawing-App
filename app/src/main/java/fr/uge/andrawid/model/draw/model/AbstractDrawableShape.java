@@ -1,7 +1,6 @@
 package fr.uge.andrawid.model.draw.model;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
