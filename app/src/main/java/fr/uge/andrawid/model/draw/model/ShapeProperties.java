@@ -17,7 +17,7 @@ public class ShapeProperties {
     private final float originY;
 
     private int color = Color.BLACK;
-    private float strokeWidth = 10;
+    private float strokeWidth = 5;
     // color
     // lineWidth
 
