@@ -19,8 +19,6 @@ public class JsonManager implements DrawingIO {
     @Override
     public void save(ShapeContainer container, OutputStream output) {
 
-        Log.i("azerty", container.toJSON().toString());
-
         try {
             Objects.requireNonNull(output).write(Objects.requireNonNull(container).toJSON().toString().getBytes());
             output.flush();
@@ -32,6 +30,8 @@ public class JsonManager implements DrawingIO {
     @Override
     public ShapeContainer load(InputStream input) {
 
+        ShapeContainer shapeContainer = null;
+
         try (
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
         ) {
@@ -41,15 +41,13 @@ public class JsonManager implements DrawingIO {
             while ((inputStr = streamReader.readLine()) != null)
                 stringBuilder.append(inputStr);
 
-            JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-
-            Log.i("azerty", jsonObject.toString());
+            shapeContainer = new ShapeContainer(new JSONObject(stringBuilder.toString()));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return shapeContainer;
     }
 
 }

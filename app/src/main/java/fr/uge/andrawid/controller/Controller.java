@@ -1,43 +1,47 @@
 package fr.uge.andrawid.controller;
 
-import android.os.Environment;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import fr.uge.andrawid.R;
+import fr.uge.andrawid.model.draw.model.ColorKind;
 import fr.uge.andrawid.model.draw.model.ShapeBuilder;
 import fr.uge.andrawid.model.draw.container.ShapeContainer;
 import fr.uge.andrawid.model.draw.model.ShapeProperties;
 import fr.uge.andrawid.model.draw.model.ShapeKind;
-import fr.uge.andrawid.model.save.JsonManager;
+import fr.uge.andrawid.model.save.FileManager;
 import fr.uge.andrawid.view.DrawingView;
 
 public class Controller {
 
     private ShapeContainer shapeContainer;
     private ShapeBuilder shapeBuilder;
-
+    private DrawingView drawingView;
+    private String drawingName;
+    private ColorKind colorKind;
 
     public Controller(DrawingView drawingView) {
 
+        // TODO ?
+        this.drawingView = drawingView;
         this.shapeContainer = new ShapeContainer();
-        Objects.requireNonNull(drawingView).setModel(shapeContainer);
+        this.drawingView.setModel(this.shapeContainer);
+        // TODO ?
 
         this.shapeBuilder = new ShapeBuilder();
         this.shapeBuilder.setShapeKind(ShapeKind.CURSIVE);
-
-
-        File docPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File appPath = new File(docPath, "andrawid");
-        appPath.mkdir();
+        FileManager.getInstance().init();
     }
 
     private float initialX;
     private float initialY;
     private ArrayList<Float> moveCoords;
+
+    public void onRefresh(String drawingName) {
+        FileManager fileManager = FileManager.getInstance();
+        this.shapeContainer = fileManager.exists(Objects.requireNonNull(drawingName)) ? fileManager.load(drawingName) : fileManager.save(shapeContainer, drawingName);
+        this.drawingView.setModel(this.shapeContainer);
+        this.drawingName = drawingName;
+    }
 
     public void onDown(float x, float y) {
         initialX = x;
@@ -56,7 +60,7 @@ public class Controller {
     }
 
     public void onUp(float x, float y) {
-        shapeContainer.add(shapeBuilder.build(mergeCoords(x, y)), new ShapeProperties(initialX, initialY));
+        shapeContainer.add(shapeBuilder.build(mergeCoords(x, y)), new ShapeProperties(initialX, initialY, colorKind));
     }
 
     private float[] mergeCoords(float x, float y) {
@@ -82,6 +86,10 @@ public class Controller {
         this.shapeBuilder.setShapeKind(Objects.requireNonNull(shapeKind));
     }
 
+    public void onColorItemSelection(ColorKind colorKind) {
+        this.colorKind = colorKind;
+    }
+
     public void onShapeSelection() {
         shapeContainer.selectNearestShape(initialX, initialY);
         shapeContainer.moveSelectedShape(initialX, initialY);
@@ -94,5 +102,12 @@ public class Controller {
     public void onShapeDelete() {
         shapeContainer.selectNearestShape(initialX, initialY);
         shapeContainer.deleteSelectedShape();
+    }
+
+    public void onSave() {
+        if (drawingName == null)
+            return ;
+
+        FileManager.getInstance().save(shapeContainer, drawingName);
     }
 }

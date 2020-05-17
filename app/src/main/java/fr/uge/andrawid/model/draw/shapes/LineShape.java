@@ -12,6 +12,8 @@ public class LineShape extends AbstractDrawableShape {
 
     public LineShape(float[] coordinates) {
         super(coordinates);
+        if (Objects.requireNonNull(coordinates).length != 4)
+            throw new IllegalArgumentException("Coordinates length of a line must be 4!");
     }
 
     @Override
