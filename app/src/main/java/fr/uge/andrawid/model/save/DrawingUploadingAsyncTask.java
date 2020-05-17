@@ -43,14 +43,29 @@ public class DrawingUploadingAsyncTask extends AsyncTask<Object, Integer, Boolea
 
         try {
 
-            InputStream inputStream = contentResolver.openInputStream(pictureUri);
+            InputStream is = contentResolver.openInputStream(pictureUri);
 
             conn.setDoOutput(true);
-            conn.setFixedLengthStreamingMode(inputStream.available());
+            conn.setFixedLengthStreamingMode(is.available());
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "image/jpeg");
 
             OutputStream os = conn.getOutputStream();
+
+            byte[] buffer = new byte[1014];
+            for (int r = is.read(buffer); r != -1; r = is.read(buffer)) {
+                os.write(buffer, 0, r);
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e)
+                {
+                    break;
+                }
+            }
+
+            is.close();
+            os.flush();
+            os.close();
 
             try {
                 conn.getInputStream().close();

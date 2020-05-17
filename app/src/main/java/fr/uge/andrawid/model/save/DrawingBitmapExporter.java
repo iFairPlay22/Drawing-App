@@ -1,15 +1,11 @@
 package fr.uge.andrawid.model.save;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import fr.uge.andrawid.R;
 import fr.uge.andrawid.model.draw.container.ShapeContainer;
 import fr.uge.andrawid.view.DrawingView;
 
@@ -32,7 +28,6 @@ public class DrawingBitmapExporter implements DrawingIO {
         container.draw(canvas);
 
         bitmap.compress(format, 100, output);
-
     }
 
     @Override
