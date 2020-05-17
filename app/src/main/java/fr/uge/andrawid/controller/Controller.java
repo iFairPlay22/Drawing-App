@@ -115,6 +115,6 @@ public class Controller {
     }
 
     public Uri onShareDrawing() {
-        return FileManager.getInstance().createTemporaryImage(drawingName, shapeContainer);
+        return FileManager.getInstance().createTemporaryImage(drawingName, shapeContainer, drawingView);
     }
 }

@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import fr.uge.andrawid.MainActivity;
 import fr.uge.andrawid.model.draw.container.ShapeContainer;
+import fr.uge.andrawid.view.DrawingView;
 
 import static androidx.core.content.FileProvider.getUriForFile;
 
@@ -99,11 +100,11 @@ public class FileManager {
         return shapeContainer;
     }
 
-    public Uri createTemporaryImage(String drawingName, ShapeContainer shapeContainer) {
+    public Uri createTemporaryImage(String drawingName, ShapeContainer shapeContainer, DrawingView drawingView) {
 
 
         File filepath = new File(temporaryImages, Objects.requireNonNull(drawingName) + ".jpg");
-        DrawingIO exporter = new DrawingBitmapExporter(Bitmap.CompressFormat.JPEG);
+        DrawingIO exporter = new DrawingBitmapExporter(Bitmap.CompressFormat.JPEG, drawingView);
 
         try {
 
